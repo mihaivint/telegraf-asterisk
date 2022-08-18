@@ -1,3 +1,4 @@
+//go:generate ../../../tools/readme_config_includer/generator
 package asterisk
 
 import (
@@ -8,7 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
+	_ "embed"
 	"github.com/influxdata/telegraf"
 	"github.com/influxdata/telegraf/plugins/inputs"
 )
@@ -18,15 +19,11 @@ type Asterisk struct {
 	Nodeid string `toml:"nodeid"`
 }
 
-var AsteriskConfig = `
-  ##Sample Config
-  #
-  #socket = "/var/run/asterisk/asterisk.ctl"
-  #nodeid = "nodeid"
-`
+//go:embed sample.conf
+var sampleConfig string
 
 func (s *Asterisk) SampleConfig() string {
-	return AsteriskConfig
+	return sampleConfig
 }
 
 func (s *Asterisk) Description() string {
